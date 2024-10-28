@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiz Result</title>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h2 id="score" style="color: blue; margin-top: 5%"></h2>
+      <a href="/">Back to Main</a>
+    </div>
+  </body>
+  <script>
+    function getLastScore() {
+      const lastQuizScore = localStorage.getItem("lastQuizScore");
+      const h2El = document.querySelector("h2");
+      h2El.textContent = lastQuizScore;
+    }
+    getLastScore();
+  </script>
+</html>

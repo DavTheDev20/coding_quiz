@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{quiz.title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <style>
+      * {
+        font-family: "Open Sans", sans-serif;
+      }
+    </style>
+    <h1>{{quiz.title}}</h1>
+    <div class="question">
+      {% for question in quiz.questions %}
+      <form onsubmit="handleQuizSubmission({{quiz.quiz_id}})">
+        <h3>{{question.question_text}}</h3>
+        <div class="answers">
+          {% for answer in question.answers %}
+          <div>
+            <input
+              type="radio"
+              name="q_answer_{{question.question_id}}"
+              value="{{answer.text}}"
+            />
+            <label>{{answer.text}}</label>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% endfor %}
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <br />
+    <a href="/">Go Back</a>
+  </body>
+  <script>
+    async function handleQuizSubmission(question_id) {
+      event.preventDefault();
+      const answer_names = document.querySelectorAll("input:checked");
+      const submitted_answers = [];
+      answer_names.forEach((answer) => {
+        submitted_answers.push(answer.value);
+      });
+      const response = await fetch(
+        "http://localhost:5000/api/quiz/{{quiz.quiz_id}}/check-answers",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            submitted_answers: submitted_answers,
+          }),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      localStorage.setItem("lastQuizScore", data.msg);
+      return window.location.replace("/quiz/{{quiz.quiz_id}}/result");
+    }
+  </script>
+</html>

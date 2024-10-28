@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <style>
+      * {
+        font-family: "Open Sans", sans-serif;
+      }
+    </style>
+    <h1>{{title}}</h1>
+    <h2>Quizzes</h2>
+    {% for quiz in quizzes %}
+    <h3>
+      <a href="/quiz/{{quiz.quiz_id}}">{{quiz.title}}</a>
+    </h3>
+    {% endfor %}
+  </body>
+</html>
